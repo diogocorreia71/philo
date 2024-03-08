@@ -1,4 +1,4 @@
-#include <philo.h>
+#include "philo.h"
 
 //to avoid writing LOCK UNLOCK everywhere
 

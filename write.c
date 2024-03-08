@@ -1,4 +1,4 @@
-#include <philo.h>
+#include "philo.h"
 
 static void	write_status_debug(t_philo_status status, t_philo *philo, long elapsed)
 {

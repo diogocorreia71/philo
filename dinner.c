@@ -1,4 +1,4 @@
-#include <philo.h>
+#include "philo.h"
 
 static void	thinking(t_philo *philo)
 {
