@@ -83,6 +83,7 @@ typedef struct s_table
 void	error_exit(const char *error);
 long	gettime(t_time_code time_code);
 void	precise_usleep(long usec, t_table *table);
+void	clean(t_table *table);
 // parsing
 void	parse_input(t_table *table, char **argv);
 //safe functions
@@ -101,3 +102,6 @@ void	set_bool(t_mtx *mutex, bool *dest, bool value);
 void	wait_all_threads(t_table *table);
 //write
 void	write_status(t_philo_status status, t_philo *philo, bool debug);
+//dinner
+void	dinner_start(t_table *table);
+void	*dinner_simulation(void *data);

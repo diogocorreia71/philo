@@ -33,7 +33,7 @@ void	write_status(t_philo_status status, t_philo *philo, bool debug)
 			printf("%-6ld""%d has taken a fork\n", elapsed, philo->id);
 		else if (EATING == status && !simulation_finished(philo->table))
 			printf("%-6ld""%d is eating\n", elapsed, philo->id);
-		else if (SLEEPING == status && !simulation_finished(philo->id))
+		else if (SLEEPING == status && !simulation_finished(philo->table))
 			printf("%-6ld""%d is sleeping\n", elapsed, philo->id);
 		else if (THINKING == status && !simulation_finished(philo->table))
 			printf("%-6ld""%d is thinking\n", elapsed, philo->id);

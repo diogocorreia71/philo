@@ -14,14 +14,12 @@ MAKE = make -C
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-						${MAKE}
 						cc ${FLAGS} ${OBJS} ${LIBFT} -o ${NAME}
 						
 clean:
 						${RM} ${OBJS}
 
 fclean: clean
-						${MAKE} fclean
 						${RM} ${NAME}
 
 re: fclean all
