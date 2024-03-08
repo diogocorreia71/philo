@@ -1,5 +1,25 @@
 #include <philo.h>
 
+static void	thinking(t_philo *philo)
+{
+	write_status(THINKING, philo, DEBUG_MODE);
+}
+
+static void	eat(t_philo *philo)
+{
+	safe_mutex_handle(&philo->first_fork->fork, LOCK);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+	safe_mutex_handle(&philo->second_fork->fork, LOCK);
+	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+	philo->meals_counter++;
+	write_status(EATING, philo, DEBUG_MODE);
+	precise_usleep(philo->table->time_to_eat, philo->table);
+	if (philo->table->nbr_limit_meals > 0
+		&& philo->meals_counter == philo->table->nbr_limit_meals)
+		set_bool(&philo->philo_mutex, &philo->full, true);
+}
+
 void	*dinner_simulation(void *data)
 {
 	t_philo	*philo;
@@ -13,7 +33,8 @@ void	*dinner_simulation(void *data)
 		if (philo->full) //TODO
 			break ;
 		eat(philo);
-		//sleep -> write_status and precise usleep
+		write_status(SLEEPING, philo, DEBUG_MODE);
+		precise_usleep(philo->table->time_to_sleep, philo->table);
 		thinking(philo); //TODO
 	}
 	return (NULL);

@@ -7,6 +7,9 @@
 #include <limits.h>
 #include <errno.h>
 
+//write function macro
+#define DEBUG_MODE	0
+
 typedef enum e_opcode
 {
 	LOCK,
@@ -55,6 +58,7 @@ typedef struct	s_philo
 	t_fork	*first_fork;
 	t_fork	*second_fork;
 	pthread_t	thread_id;
+	t_mtx	philo_mutex;
 	t_table	*table;
 }	t_philo;
 
