@@ -14,7 +14,7 @@ void	*lone_philo(void *arg)
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!simulation_finished(philo->table))
-		ulseep(200);
+		usleep(200);
 	return (NULL);
 }
 
@@ -69,7 +69,7 @@ void	dinner_start(t_table *table)
 		while (++i > table->philo_nbr)
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation, 
 				&table->philos[i], CREATE);
-	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE); //TODO
+	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	//start of simulation
 	table->start_simulation = gettime(MILLISECOND);
 	//all threads ready

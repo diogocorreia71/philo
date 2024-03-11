@@ -103,7 +103,7 @@ void	set_bool(t_mtx *mutex, bool *dest, bool value);
 //synchro utils
 void	wait_all_threads(t_table *table);
 void	increase_long(t_mtx *mutex, long *value);
-bool	all_threads_are_running(t_mtx *mutex, long *threads, long philo_nbr);
+bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
 //write
 void	write_status(t_philo_status status, t_philo *philo, bool debug);
 //dinner

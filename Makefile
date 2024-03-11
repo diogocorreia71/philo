@@ -1,4 +1,4 @@
-SRC = dinner.c getters_setters.c init.c main.c parsing.c safe_functions.c synchro_utils.c\
+SRC = dinner.c getters_setters.c init.c main.c monitoring.c parsing.c safe_functions.c synchro_utils.c\
 		utils.c write.c
 
 NAME = philo

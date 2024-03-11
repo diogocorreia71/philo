@@ -6,7 +6,7 @@ void	wait_all_threads(t_table *table)
 		;
 }
 
-bool	all_threads_are_running(t_mtx *mutex, long *threads, long philo_nbr)
+bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr)
 {
 	bool	ret;
 
