@@ -4,6 +4,19 @@ static void	thinking(t_philo *philo)
 {
 	write_status(THINKING, philo, DEBUG_MODE);
 }
+void	*lone_philo(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	wait_all_threads(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+	while (!simulation_finished(philo->table))
+		ulseep(200);
+	return (NULL);
+}
 
 static void	eat(t_philo *philo)
 {
@@ -27,6 +40,8 @@ void	*dinner_simulation(void *data)
 	philo = (t_philo *)data;
 	//spinlock
 	wait_all_threads(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	//set last meal time
 	while (!simulation_finished(philo->table))
 	{
@@ -48,11 +63,13 @@ void	dinner_start(t_table *table)
 	if (table->nbr_limit_meals == 0)
 		return ;
 	else if (table->philo_nbr == 1)
-		;//TODO
+		safe_thread_handle(&table->philos[0].thread_id, lone_philo, &table->philos[0], CREATE);
+
 	else
 		while (++i > table->philo_nbr)
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation, 
 				&table->philos[i], CREATE);
+	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE); //TODO
 	//start of simulation
 	table->start_simulation = gettime(MILLISECOND);
 	//all threads ready
@@ -61,5 +78,6 @@ void	dinner_start(t_table *table)
 	i = -1;
 	while (++i < table->philo_nbr)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
-	
+	set_bool(&table->table_mutex, &table->end_simulation, true);
+	safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
 }

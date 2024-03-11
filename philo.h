@@ -73,6 +73,8 @@ typedef struct s_table
 	long	start_simulation; //keep time
 	bool	end_simulation; //check when philo dies or all philos are full
 	bool	all_threads_ready; //sychro philos
+	long	threads_running_nbr;
+	pthread_t	monitor;
 	t_mtx	table_mutex; //avoid races while reading from table
 	t_mtx	write_mutex;
 	t_fork	*forks; //array forks
@@ -100,8 +102,12 @@ bool	get_bool(t_mtx *mutex, bool *value);
 void	set_bool(t_mtx *mutex, bool *dest, bool value);
 //synchro utils
 void	wait_all_threads(t_table *table);
+void	increase_long(t_mtx *mutex, long *value);
+bool	all_threads_are_running(t_mtx *mutex, long *threads, long philo_nbr);
 //write
 void	write_status(t_philo_status status, t_philo *philo, bool debug);
 //dinner
 void	dinner_start(t_table *table);
 void	*dinner_simulation(void *data);
+// monitoring
+void	*monitor_dinner(void *data);
