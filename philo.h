@@ -47,5 +47,13 @@ void	put_msg(t_philo *philo, char c);
 
 // checks
 void	put_msg(t_philo *philo, char c);
+void	philo_monitor(t_global_var *data);
+
+// threads
+int	join_threads(t_global_var *data);
+int	thread_init(t_global_var *data);
+
+// routine
+void	*thread_start(void *arg);
 
 #endif
