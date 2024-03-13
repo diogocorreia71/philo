@@ -1,64 +1,29 @@
 #include "philo.h"
 
-long	gettime(t_time_code time_code)
+int	ft_atoi(const char *str)
 {
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		error_exit("Gettimeofday failed.");
-	if (SECOND == time_code)
-		return (tv.tv_sec + (tv.tv_usec / 1e6));
-	else if (MILLISECOND == time_code)
-		return ((tv.tv_sec * 1e3) + (tv.tv_usec / 1e3));
-	else if (MICROSECOND == time_code)
-		return ((tv.tv_sec * 1e6) + tv.tv_usec);
-	else
-		error_exit("Wrong input to gettime.");
-	return (1337);
-}
-
-void	precise_usleep(long usec, t_table *table)
-{
-	long	start;
-	long	elapsed;
-	long	rem;
-
-	start = gettime(MICROSECOND);
-	while (gettime(MICROSECOND) - start < usec)
-	{
-		if (simulation_finished(table))
-			break ;
-		elapsed = gettime(MICROSECOND) - start;
-		rem = usec - elapsed;
-		if (rem > 1e3)
-			usleep(rem / 2);
-		else
-		{
-			//spinlock
-			while (gettime(MICROSECOND) - start < usec)
-				;
-		}
-	}
-}
-
-void	clean(t_table *table)
-{
-	t_philo	*philo;
 	int	i;
+	long int	c;
+	int	a;
 
-	i = -1;
-	while (++i < table->philo_nbr)
+	a = 1;
+	c = 0;
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		philo = table->philos + i;
-		safe_mutex_handle(&philo->philo_mutex, DESTROY);
+		if (str[i] == '-')
+			a = a * -1;
+		i++;
 	}
-	safe_mutex_handle(&table->write_mutex, DESTROY);
-	safe_mutex_handle(&table->table_mutex, DESTROY);
-	free(table->forks);
-	free(table->philos);
-}
-void	error_exit(const char *error)
-{
-	printf("%s\n", error);
-	exit(EXIT_FAILURE);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		c = (str[i] - '0') + (c * 10);
+		i++; 
+	}
+	if ((c * a) > 2147483647 || (c * a) <= 0 || str[i] != '\0')
+		return (-1);
+	else
+		return (c * a);
 }

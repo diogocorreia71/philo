@@ -1,113 +1,44 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <pthread.h>
-#include <sys/time.h>
-#include <limits.h>
-#include <errno.h>
+#ifndef PHILO_H
+# define PHILO_H
 
-//write function macro
-#define DEBUG_MODE	0
+# include <pthread.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <sys/time.h>
 
-typedef enum e_opcode
+typedef struct s_philo
 {
-	LOCK,
-	UNLOCK,
-	INIT,
-	DESTROY,
-	CREATE,
-	JOIN,
-	DETACH,
-}	t_opcode;
-
-typedef enum e_time_code
-{
-	SECOND,
-	MILLISECOND,
-	MICROSECOND,
-}	t_time_code;
-
-typedef enum e_status
-{
-	EATING,
-	SLEEPING,
-	THINKING,
-	TAKE_FIRST_FORK,
-	TAKE_SECOND_FORK,
-	DIED,
-}	t_philo_status;
-
-typedef pthread_mutex_t t_mtx;
-
-// for compiler
-typedef struct s_table t_table;
-
-typedef struct	s_fork
-{
-	t_mtx	fork;
-	int		fork_id;
-}	t_fork;
-
-typedef struct	s_philo
-{
-	int		id;
-	long	meals_counter;
-	bool	full;
-	long	last_meal_time;
-	t_fork	*first_fork;
-	t_fork	*second_fork;
-	pthread_t	thread_id;
-	t_mtx	philo_mutex;
-	t_table	*table;
+	pthread_t	thread_philo;
+	int	philo_id;
+	int	meals_nbr;
+	int	philo_full;
+	long long	last_eat;
+	struct s_global_var	*data;
 }	t_philo;
 
-// command line input
-typedef struct s_table
+typedef struct s_global_var
 {
-	long	philo_nbr;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	nbr_limit_meals;
-	long	start_simulation; //keep time
-	bool	end_simulation; //check when philo dies or all philos are full
-	bool	all_threads_ready; //sychro philos
-	long	threads_running_nbr;
-	pthread_t	monitor;
-	t_mtx	table_mutex; //avoid races while reading from table
-	t_mtx	write_mutex;
-	t_fork	*forks; //array forks
-	t_philo	*philos; //array philos
-}	t_table;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	nbr_meals;
+	int	end;
+	long long	time_ms;
+	int	nbr_phils;
+	t_philo	*all;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	last_eat_lock;
+	pthread_mutex_t meals_nbr_lock;
+	pthread_mutex_t	philo_dead;
+}	t_global_var;
 
-// utils
-void	error_exit(const char *error);
-long	gettime(t_time_code time_code);
-void	precise_usleep(long usec, t_table *table);
-void	clean(t_table *table);
-// parsing
-void	parse_input(t_table *table, char **argv);
-//safe functions
-void	*safe_malloc(size_t bytes);
-void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
-void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
 //init
-void	data_init(t_table *table);
-//lock and unlock
-bool	simulation_finished(t_table *table);
-long	get_long(t_mtx *mutex, long *value);
-void	set_long(t_mtx *mutex, long *dest, long value);
-bool	get_bool(t_mtx *mutex, bool *value);
-void	set_bool(t_mtx *mutex, bool *dest, bool value);
-//synchro utils
-void	wait_all_threads(t_table *table);
-void	increase_long(t_mtx *mutex, long *value);
-bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
-//write
-void	write_status(t_philo_status status, t_philo *philo, bool debug);
-//dinner
-void	dinner_start(t_table *table);
-void	*dinner_simulation(void *data);
-// monitoring
-void	*monitor_dinner(void *data);
+int	data_init(t_global_var *data, char **argv);
+int	philo_init(t_philo **philo, t_global_var *data);
+
+//utils
+int	ft_atoi(const char *str);
+
+#endif
