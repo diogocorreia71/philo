@@ -43,3 +43,42 @@ int	philo_init(t_philo **philo, t_global_var *data)
 	data->all = *philo;
 	return (0);
 }
+
+int	forks_init(t_global_var *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nbr_phils)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL))
+		{
+			clean_program(data, 0);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	mutex_init(t_global_var *data)
+{
+	if (forks_init(data))
+		return (-1);
+	if (pthread_mutex_init(&data->last_eat_lock, NULL))
+	{
+		clean_program(data, 0);
+		return (-1);
+	}
+	if (pthread_mutex_init(&data->meals_nbr_lock, NULL))
+	{
+		clean_program(data, 1);
+		return (-1);
+	}
+	if (pthread_mutex_init(&data->philo_dead, NULL))
+	{
+		clean_program(data, 2);
+		return (-1);
+	}
+	return (0);
+}

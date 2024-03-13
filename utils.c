@@ -27,3 +27,58 @@ int	ft_atoi(const char *str)
 	else
 		return (c * a);
 }
+
+long long	start_time(void)
+{
+	struct timeval	time;
+	long long	time_ml;
+
+	gettimeofday(&time, NULL);
+	time_ml = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (time_ml);
+}
+
+void	put_msg(t_philo *philo, char c)
+{
+	long long	tmp;
+
+	tmp = start_time() - philo->data->time_ms;
+	if (c == 'L' || c == 'R')
+		printf("%lld %d has taken a fork\n", tmp, philo->philo_id);
+	else if (c == 'E')
+		printf("%lld %d is eating\n", tmp, philo->philo_id);
+	else if (c == 'S')
+		printf("%lld %d is sleeping\n", tmp, philo->philo_id);
+	else if (c == 'T')
+		printf("%lld %d is thinking\n", tmp, philo->philo_id);
+	else if (c == 'D')
+		printf("%lld %d died\n", tmp, philo->philo_id);
+}
+
+void	clean_program(t_global_var *data, int flag)
+{
+	if (flag == 1)
+	{
+		pthread_mutex_destroy(&data->last_eat_lock);
+		printf("Error initiating mutex meals\n");
+	}
+	else if (flag == 2)
+	{
+		pthread_mutex_destroy(&data->last_eat_lock);
+		pthread_mutex_destroy(&data->meals_nbr_lock);
+		printf("Error initiating mutex philo_dead\n");
+	}
+	else if (flag == 3)
+	{
+		pthread_mutex_destroy(&data->last_eat_lock);
+		pthread_mutex_destroy(&data->meals_nbr_lock);
+		pthread_mutex_destroy(&data->philo_dead);
+	}
+	if (data->forks)
+	{
+		pthread_mutex_destroy(data->forks);
+		free(data->forks);
+	}
+	if (data->all)
+		free(data->all);
+}

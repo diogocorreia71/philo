@@ -34,11 +34,18 @@ typedef struct s_global_var
 	pthread_mutex_t	philo_dead;
 }	t_global_var;
 
-//init
+// init
 int	data_init(t_global_var *data, char **argv);
 int	philo_init(t_philo **philo, t_global_var *data);
+int	mutex_init(t_global_var *data);
 
-//utils
+// utils
 int	ft_atoi(const char *str);
+void	clean_program(t_global_var *data, int flag);
+long long	start_time(void);
+void	put_msg(t_philo *philo, char c);
+
+// checks
+void	put_msg(t_philo *philo, char c);
 
 #endif
