@@ -1,21 +1,28 @@
-NAME = philo
 SRC = checks.c init.c main.c routine.c threads.c utils.c
+
+NAME = philo
+
 OBJS = ${SRC:.c=.o}
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -I include
 
-%.o:	%.c
-			cc %{CFLAGS} -c $< -o $@
+RM = rm -f
 
-${NAME}:	${OBJS}
-					ar rcs philo.a ${OBJS}
-					cc ${CFLAGS} philo.a -o ${NAME} -pthread
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread -I include
+
+MAKE = make -C
 
 all: ${NAME}
 
+${NAME}: ${OBJS}
+						cc ${FLAGS} ${OBJS} -o ${NAME}
+						
 clean:
-			rm -f ${OBJS}
+						${RM} ${OBJS}
 
-fclean:	clean
-			rm -f philo.a philo
+fclean: clean
+						${RM} ${NAME}
 
-re:	fclean	all
+re: fclean all
+
+.PHONY: all clean fclean re
+
+.SILENT:
