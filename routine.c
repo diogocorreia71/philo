@@ -6,7 +6,7 @@
 /*   By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:00:31 by diodos-s          #+#    #+#             */
-/*   Updated: 2024/03/19 12:00:32 by diodos-s         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:08:47 by diodos-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->meals_nbr_lock);
 	pthread_mutex_unlock(&(philo->data->forks[philo->philo_id - 1]));
 	pthread_mutex_unlock(&(philo->data->forks
-			[philo->philo_id % philo->data->nbr_phils]));
+		[philo->philo_id % philo->data->nbr_phils]));
 	return (0);
 }
 

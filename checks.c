@@ -6,7 +6,7 @@
 /*   By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:00:05 by diodos-s          #+#    #+#             */
-/*   Updated: 2024/03/19 12:00:08 by diodos-s         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:07:51 by diodos-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_all_ate(t_global_var *data)
 
 int	check_philo(t_global_var *data, int *i)
 {
-	long long tmp;
+	long long	tmp;
 
 	while (*i < data->nbr_phils)
 	{

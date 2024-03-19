@@ -6,7 +6,7 @@
 /*   By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:54:46 by diodos-s          #+#    #+#             */
-/*   Updated: 2024/03/19 11:55:01 by diodos-s         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:08:26 by diodos-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	one_philo(t_global_var *data)
 
 int	main(int argc, char **argv)
 {
-	t_philo	*philo;
+	t_philo			*philo;
 	t_global_var	data;
 
 	if (argc == 5 || argc == 6)

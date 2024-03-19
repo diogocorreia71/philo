@@ -6,7 +6,7 @@
 /*   By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:00:38 by diodos-s          #+#    #+#             */
-/*   Updated: 2024/03/19 12:00:39 by diodos-s         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:09:50 by diodos-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
+	int			i;
 	long int	c;
-	int	a;
+	int			a;
 
 	a = 1;
 	c = 0;
@@ -32,7 +32,7 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		c = (str[i] - '0') + (c * 10);
-		i++; 
+		i++;
 	}
 	if ((c * a) > 2147483647 || (c * a) <= 0 || str[i] != '\0')
 		return (-1);
@@ -43,7 +43,7 @@ int	ft_atoi(const char *str)
 long long	start_time(void)
 {
 	struct timeval	time;
-	long long	time_ml;
+	long long		time_ml;
 
 	gettimeofday(&time, NULL);
 	time_ml = (time.tv_sec * 1000) + (time.tv_usec / 1000);

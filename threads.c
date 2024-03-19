@@ -6,7 +6,7 @@
 /*   By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:00:35 by diodos-s          #+#    #+#             */
-/*   Updated: 2024/03/19 12:00:36 by diodos-s         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:09:04 by diodos-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	thread_init(t_global_var *data)
 	{
 		data->all[i].last_eat = start_time();
 		if (pthread_create(&(data->all[i].thread_philo), NULL,
-			thread_start, &data->all[i]))
+				thread_start, &data->all[i]))
 		{
 			clean_program(data, 3);
 			return (-1);
