@@ -6,7 +6,7 @@
 #    By: diodos-s <diodos-s@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/19 12:00:23 by diodos-s          #+#    #+#              #
-#    Updated: 2024/03/19 12:07:08 by diodos-s         ###   ########.fr        #
+#    Updated: 2024/04/02 14:08:16 by diodos-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS = ${SRC:.c=.o}
 
 RM = rm -f
 
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread -I include
+FLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread -I include
 
 MAKE = make -C
 
@@ -36,5 +36,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
-.SILENT:
